@@ -1,8 +1,13 @@
 import defaultImage from "logo.svg";
 import { useRef, useState } from "react";
+import { Button, Header, Input, Image, Container } from "semantic-ui-react";
+
 
 const ImageGenerator = () => {
   const [imageUrl, setImageUrl] = useState<string>("/");
+  // refs do not make components rerender while useEffect does 
+  // returns object 
+  
   let inputRef = useRef<HTMLInputElement>(null);
   const generateResponse = async () => {
     if (inputRef.current !== null && inputRef.current.value === "") {
@@ -15,7 +20,7 @@ const ImageGenerator = () => {
         headers: {
           "Content-Type":"application/json",
           Authorization:
-          "Bearer ___",
+          "Bearer _____",
           "User-Agent":"Chrome",
         },
         body:JSON.stringify({
@@ -34,32 +39,36 @@ const ImageGenerator = () => {
   
   return (
     <div>
-      <h3>Here would be Image Generator</h3>
-      {/* {TEXT} */}
-      <div>
-        <h4>Please provide a description to an image you would like to create</h4>
+      <Container>
+        <Header as='h3'>Here would be Image Generator</Header>
+        {/* {TEXT} */}
         <div>
-        <input type="text" ref={inputRef} />
-        <button onClick={() => {generateResponse()}}>SUBMIT</button>
+          <Header as='h4'>Please provide a description to an image you would like to create</Header>
+          <div>
+          <Input
+            icon={{ name: 'search', circular: true, link: true }}
+            placeholder='Search...'
+          />
+          <Button onClick={() => {generateResponse()}}>SUBMIT</Button>
+          </div>
         </div>
-        
-      </div>
-      {/* {IMAGE} */}
-      <p></p>
-      <div>
-        <img 
-          src={imageUrl === "/" ? defaultImage : imageUrl} 
-          alt="default_image"
-          width="400" height="400"/>
-      </div>
+        {/* {IMAGE} */}
+        <p></p>
+        <div>
+          <Image src={imageUrl === "/" ? defaultImage : imageUrl} size='large' centered />
+        </div>
+
+      </Container>
+      
     </div>
   )
 }
 //witch with the luck manipulation superpower
 export default ImageGenerator
 
-// TODO: Nice style 
+// TODO: Nice style  - те же инструменты, что используются в проекте
 // Loading bar
 // оформить ключи скрыть 
+
 
 

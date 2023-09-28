@@ -1,7 +1,5 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import ImageGenerator from './components/assets/ImageGenerator';
+import ImageGenerator from './components/scenes/ImageGenerator';
 
 function App() {
   return (
