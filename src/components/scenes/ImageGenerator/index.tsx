@@ -1,3 +1,4 @@
+import apiTokens from "config";
 import defaultImage from "logo.svg";
 import { useRef, useState } from "react";
 import { Button, Header, Input, Image, Container } from "semantic-ui-react";
@@ -20,7 +21,7 @@ const ImageGenerator = () => {
         headers: {
           "Content-Type":"application/json",
           Authorization:
-          "Bearer _____",
+          apiTokens.openAI_API,
           "User-Agent":"Chrome",
         },
         body:JSON.stringify({
