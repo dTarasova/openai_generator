@@ -6,15 +6,13 @@ import { Button, Header, Input, Image, Container } from "semantic-ui-react";
 
 const ImageGenerator = () => {
   const [imageUrl, setImageUrl] = useState<string>("/");
-  // refs do not make components rerender while useEffect does 
-  // returns object 
+  const [inputValue, setInputValue] = useState<string>('');
   
-  let inputRef = useRef<HTMLInputElement>(null);
   const generateResponse = async () => {
-    if (inputRef.current !== null && inputRef.current.value === "") {
+    if (inputValue === "") {
       return 0;
     }
-    console.log("in generate response")
+
     const response = await fetch (
       "https://api.openai.com/v1/images/generations", {
         method:"POST",
@@ -25,7 +23,7 @@ const ImageGenerator = () => {
           "User-Agent":"Chrome",
         },
         body:JSON.stringify({
-          prompt: `${inputRef.current?.value}`,
+          prompt: inputValue,
           n: 1,
           size: "256x256",
         })
@@ -33,10 +31,11 @@ const ImageGenerator = () => {
     );
     console.log("fetch asked");
     let data = await response.json();
-    console.log(data);
     let data_array = data.data;
     setImageUrl(data_array[0].url);
   }
+
+  
   
   return (
     <div>
@@ -49,6 +48,8 @@ const ImageGenerator = () => {
           <Input
             icon={{ name: 'search', circular: true, link: true }}
             placeholder='Search...'
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
           />
           <Button onClick={() => {generateResponse()}}>SUBMIT</Button>
           </div>
@@ -64,12 +65,10 @@ const ImageGenerator = () => {
     </div>
   )
 }
-//witch with the luck manipulation superpower
+
 export default ImageGenerator
 
-// TODO: Nice style  - те же инструменты, что используются в проекте
-// Loading bar
-// оформить ключи скрыть 
+
 
 
 
