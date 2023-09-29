@@ -1,5 +1,5 @@
 import './App.css';
-import ImageGenerator from './components/scenes/ImageGenerator';
+import ImageGenerator from './pages/ImageGenerator';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
