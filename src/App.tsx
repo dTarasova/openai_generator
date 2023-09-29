@@ -1,13 +1,17 @@
+import Home from 'pages/Home';
 import './App.css';
 import ImageGenerator from './pages/ImageGenerator';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from 'components/navbar/Layout';
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path='/' />
+        <Route element={<Layout/>}>
+          <Route index element={<Home/>}/>
           <Route path='image-generator' element={<ImageGenerator/>} />
+        </Route>
       </Routes>
     </div>
   );
