@@ -1,4 +1,3 @@
-import React from 'react'
 import { Container, Grid, Segment } from 'semantic-ui-react'
 import Navbar from './Navbar'
 import { Outlet, useLocation } from 'react-router-dom'
