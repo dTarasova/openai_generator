@@ -8,18 +8,18 @@ interface Props {
 const NavLinks = ({currentPage} : Props) => {
   
     return (
-        <List  >
+        <List horizontal >
             
-            <List.Item as="li">
+            <List.Item>
                 <List.Content>
-                    <Button as={NavLink} to="/" fluid>
+                    <Button inverted as={NavLink} to="/" fluid>
                         Home
                     </Button>
                 </List.Content>
             </List.Item>
-            <List.Item as="li">
+            <List.Item>
                 <List.Content>
-                    <Button as={NavLink} to="image-generator" fluid>
+                    <Button inverted as={NavLink} to="image-generator" fluid>
                         Image Generator
                     </Button>
                 </List.Content>

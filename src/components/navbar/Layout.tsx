@@ -5,13 +5,26 @@ import { Outlet, useLocation } from 'react-router-dom'
 const Layout = () => {
     const {pathname} = useLocation();
     return (
-        <Segment inverted attached> {/* inverted = black background */}
+        <div>
+            <Segment inverted attached size='large'> {/* inverted = black background */}
+                <Container>
+                    <Grid>
+                        <Grid.Row stretched>
+                            <Grid.Column textAlign='left'>
+                                <Navbar currentPage={pathname} />
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                </Container>
+            </Segment>
+
             <Container>
-                <Navbar currentPage={pathname} />
-                <Outlet/> 
-                {/* used for rendering all rest of the content in nested routes */}
+                <p></p>
+                <Outlet/> {/* used for rendering all rest of the content in nested routes */}     
             </Container>
-        </Segment>
+
+        </div>
+        
   )
 }
 
