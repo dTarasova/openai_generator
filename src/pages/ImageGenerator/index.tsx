@@ -1,5 +1,6 @@
+import InputForm from "components/navbar/inputForm";
 import apiTokens from "config";
-import defaultImage from "logo.svg";
+import defaultImage from "assets/logo.svg";
 import { useEffect, useState } from "react";
 import { Button, Header, Input, Image, Container, Segment, Grid, Loader } from "semantic-ui-react";
 
@@ -9,21 +10,9 @@ const ImageGenerator = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [requestSent, setRequestSent] = useState<boolean>(false);
 
-  useEffect(() => {
-    const keyHandler = (event: {which: number}) => {
-      if (event.which === 13) {
-        generateResponse();
-      }
-    }
-    window.addEventListener('keydown', keyHandler);
-    return () => {
-      window.removeEventListener('keydown', keyHandler);
-    }
-  })
-
-  const generateResponse = async () => {
+  const generateResponse: () => Promise<void>  = async () => {
     if (inputValue === "") {
-      return 0;
+      return;
     }
     console.log(inputValue);
     setRequestSent(true);
@@ -57,24 +46,9 @@ const ImageGenerator = () => {
       <Segment>
         <Container>
           <Header as='h3'>Here would be Image Generator</Header>
-          {/* {TEXT} */}
           <div>
             <Header as='h4'>Please provide a description to an image you would like to create</Header>
-            <Grid>
-              <Grid.Column width={2}/>
-              <Grid.Column width={10}>
-                <Input
-                icon={{ name: 'search', circular: true, link: true }}
-                placeholder='Search...'
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                fluid
-                />
-              </Grid.Column>
-              <Grid.Column width={2} textAlign="center">
-                <Button fluid onClick={() => {generateResponse()}}>SUBMIT</Button>
-              </Grid.Column>
-            </Grid>
+            <InputForm inputValue={inputValue} setInputValue={setInputValue} action={generateResponse}/>
           </div>
           {/* {IMAGE} */}
           <div style={{ marginTop: '30px' }}>
