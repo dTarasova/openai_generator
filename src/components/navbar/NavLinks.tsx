@@ -24,6 +24,13 @@ const NavLinks = ({currentPage} : Props) => {
                     </Button>
                 </List.Content>
             </List.Item>
+            <List.Item>
+                <List.Content>
+                    <Button inverted as={NavLink} to="greetings-genius" fluid>
+                        Greetings Genius
+                    </Button>
+                </List.Content>
+            </List.Item>
 
         </List>
   )
