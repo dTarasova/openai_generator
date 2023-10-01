@@ -1,12 +1,13 @@
 import apiTokens from "config";
 import defaultImage from "logo.svg";
 import { useEffect, useState } from "react";
-import { Button, Header, Input, Image, Container, Segment, Grid } from "semantic-ui-react";
+import { Button, Header, Input, Image, Container, Segment, Grid, Loader } from "semantic-ui-react";
 
 
 const ImageGenerator = () => {
   const [imageUrl, setImageUrl] = useState<string>("/");
   const [inputValue, setInputValue] = useState<string>('');
+  const [requestSent, setRequestSent] = useState<boolean>(false);
 
   useEffect(() => {
     const keyHandler = (event: {which: number}) => {
@@ -25,7 +26,7 @@ const ImageGenerator = () => {
       return 0;
     }
     console.log(inputValue);
-
+    setRequestSent(true);
     const response = await fetch (
       "https://api.openai.com/v1/images/generations", {
         method:"POST",
@@ -46,7 +47,8 @@ const ImageGenerator = () => {
     let data = await response.json();
     let data_array = data.data;
     setImageUrl(data_array[0].url);
-
+    setRequestSent(false);
+    console.log("data received");
   }
 
 
@@ -75,16 +77,16 @@ const ImageGenerator = () => {
             </Grid>
           </div>
           {/* {IMAGE} */}
-          <p></p>
-          <div>
-            <Image src={imageUrl === "/" ? defaultImage : imageUrl} size='large' centered />
+          <div style={{ marginTop: '30px' }}>
+            {requestSent ? (
+                <Loader active inline='centered' />
+              ) : (
+                  <Image src={imageUrl === "/" ? defaultImage : imageUrl} size='large' centered />
+              )}
           </div>
-
       </Container>
 
       </Segment>
-      
-      
     </div>
   )
 }
