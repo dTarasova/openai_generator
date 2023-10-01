@@ -1,8 +1,8 @@
 import InputForm from "components/navbar/inputForm";
 import apiTokens from "config";
 import defaultImage from "assets/logo.svg";
-import { useEffect, useState } from "react";
-import { Button, Header, Input, Image, Container, Segment, Grid, Loader } from "semantic-ui-react";
+import {useState } from "react";
+import {Header, Image, Container, Segment, Loader } from "semantic-ui-react";
 
 
 const ImageGenerator = () => {
@@ -33,27 +33,32 @@ const ImageGenerator = () => {
       }
     );
 
-    let data = await response.json();
-    let data_array = data.data;
-    setImageUrl(data_array[0].url);
-    setRequestSent(false);
-    console.log("data received");
+    try {
+      const { data } = await response.json();
+      const imageUrl = data[0].url;
+      setImageUrl(imageUrl);
+      console.log("data received");
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setRequestSent(false);
+    }
   }
-
 
   return (
     <div>
       <Segment>
         <Container>
-          <Header as='h3'>Here would be Image Generator</Header>
+          <Header as='h3'>Explore the power of AI</Header>
+          
           <div>
-            <Header as='h4'>Please provide a description to an image you would like to create</Header>
+            <Header as='h4'>Please provide a description of an image you would like to create</Header>
             <InputForm inputValue={inputValue} setInputValue={setInputValue} action={generateResponse}/>
           </div>
-          {/* {IMAGE} */}
+
           <div style={{ marginTop: '30px' }}>
             {requestSent ? (
-                <Loader active inline='centered' />
+                <Loader active inline='centered' size="large" />
               ) : (
                   <Image src={imageUrl === "/" ? defaultImage : imageUrl} size='large' centered />
               )}
