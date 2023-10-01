@@ -19,6 +19,7 @@ const FormBirthdayGuy: React.FC = () => {
   const [age, setAge] = useState<number>(0);
   const [relationships, setRelationships] = useState<string>("");
   const [about, setAbout] = useState<string>("");
+  const [fullRequest, setFullRequest] = useState<string>("");
 
   const handleNameChange = (_e: React.ChangeEvent<HTMLInputElement>, { value }: { value: string }) => {
     setName(value);
@@ -37,10 +38,16 @@ const FormBirthdayGuy: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    console.log("submit is pressed with ");
-  }
 
-  const initialImageDescription: string = "birthday card with ";
+    setFullRequest(`Create a sweet congratulations for a birthday text for a 
+                    ${age} years old ${gender} named ${name}
+                    that is my ${relationships}.
+                    Here is an additional info about this person: ${about}`);
+
+    console.log(fullRequest);
+  }
+  //TODO: language of greeting, what would like to wish
+  const initialRequestDescription: string = "";
 
   
     return (
@@ -73,7 +80,7 @@ const FormBirthdayGuy: React.FC = () => {
           <Form.Field
             control={Input}
             label='Relationships'
-            placeholder='Relationships'
+            placeholder='Friend/colleague/...'
             value={relationships}
             onChange={handleRelationshipsChange}
           />
@@ -86,6 +93,7 @@ const FormBirthdayGuy: React.FC = () => {
           value={about}
           onChange={handleAboutChange}
         />
+        
         <Form.Button content="Submit" />
       </Form>
     )
