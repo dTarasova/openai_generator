@@ -1,6 +1,6 @@
-import { Component, useState } from 'react'
+
+import { useState } from 'react'
 import {
-  Button,
   Form,
   Input,
   Select,
@@ -12,14 +12,20 @@ const genderOptions = [
   { key: 'f', text: 'Female', value: 'female' },
 ]
 
-const FormBirthdayGuy: React.FC = () => {
+interface Props {
+  request: string,
+  setRequest: React.Dispatch<React.SetStateAction<string>>
+};
+
+const FormBirthdayGuy: React.FC<Props> = ({request, setRequest} : Props) => {
 
   const [name, setName] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [age, setAge] = useState<number>(0);
   const [relationships, setRelationships] = useState<string>("");
   const [about, setAbout] = useState<string>("");
-  const [fullRequest, setFullRequest] = useState<string>("");
+  const [wishes, setWishes] = useState<string>("");
+  const [language, setLanguage] = useState<string>("Russian");
 
   const handleNameChange = (_e: React.ChangeEvent<HTMLInputElement>, { value }: { value: string }) => {
     setName(value);
@@ -36,19 +42,23 @@ const FormBirthdayGuy: React.FC = () => {
   const handleAboutChange = (_e: React.ChangeEvent<HTMLInputElement>, { value }: { value: string }) => {
     setAbout(value);
   };
+  const handleWishesChange = (_e: React.ChangeEvent<HTMLInputElement>, { value }: { value: string }) => {
+    setWishes(value);
+  };
+  const handleLanguageChange = (_e: React.ChangeEvent<HTMLInputElement>, { value }: { value: string }) => {
+    setLanguage(value);
+  };
 
   const handleSubmit = () => {
 
-    setFullRequest(`Create a sweet congratulations for a birthday text for a 
-                    ${age} years old ${gender} named ${name}
+    setRequest(`Create a sweet personal congratulations for a birthday text in ${language} language
+                    for a ${age} years old ${gender} named ${name}
                     that is my ${relationships}.
-                    Here is an additional info about this person: ${about}`);
+                    Here is an additional info about this person: ${about}
+                    Include in the following wishes, maybe reformulate a bit ${wishes}`);
 
-    console.log(fullRequest);
+    console.log(request);
   }
-  //TODO: language of greeting, what would like to wish
-  const initialRequestDescription: string = "";
-
   
     return (
       <Form onSubmit={handleSubmit}>
@@ -85,16 +95,41 @@ const FormBirthdayGuy: React.FC = () => {
             onChange={handleRelationshipsChange}
           />
         </Form.Group>
+        <Form.Group widths='equal'>
+          <Form.Field
+            control={TextArea}
+            label='About'
+            placeholder='Tell us more about the person you congratulate...'
+            value={about}
+            onChange={handleAboutChange}
+          />
+
+          <Form.Field
+            control={TextArea}
+            label='Wishes'
+            placeholder='Do you have anything specific you would like to wish? '
+            value={wishes}
+            onChange={handleWishesChange}
+          />
+        </Form.Group>
         
-        <Form.Field
-          control={TextArea}
-          label='About'
-          placeholder='Tell us more about the person you congratulate...'
-          value={about}
-          onChange={handleAboutChange}
-        />
         
-        <Form.Button content="Submit" />
+        <Form.Group>
+          <div style={{ flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Form.Field
+              control={Input}
+              label='Language'
+              value={language}
+              onChange={handleLanguageChange}
+            />
+          </div>
+          <div style={{ flex: '1', display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+            <Form.Button secondary content='Submit' />
+          </div>
+      </Form.Group>
+        
+        
+        
       </Form>
     )
   }
