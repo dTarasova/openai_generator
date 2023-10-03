@@ -21,7 +21,7 @@ const sizeOfAnswerOptions = [
   { key: 'l', text: 'Long', value: 'long' }
 ]
 
-const FormBirthdayGuy: React.FC = () => {
+const BirthdayText: React.FC = () => {
 
   const [name, setName] = useState<string>("");
   const [gender, setGender] = useState<string>("");
@@ -175,4 +175,4 @@ const FormBirthdayGuy: React.FC = () => {
     )
   }
 
-export default FormBirthdayGuy
+export default BirthdayText
