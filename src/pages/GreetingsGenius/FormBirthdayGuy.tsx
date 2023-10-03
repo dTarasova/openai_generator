@@ -1,4 +1,3 @@
-
 import apiTokens from 'config';
 import { useState } from 'react';
 import OpenAI from 'openai';
@@ -16,6 +15,12 @@ const genderOptions = [
   { key: 'f', text: 'Female', value: 'female' },
 ]
 
+const sizeOfAnswerOptions = [
+  { key: 's', text: 'Short', value: 'short' },
+  { key: 'm', text: 'Medium', value: 'medium' },
+  { key: 'l', text: 'Long', value: 'long' }
+]
+
 const FormBirthdayGuy: React.FC = () => {
 
   const [name, setName] = useState<string>("");
@@ -24,6 +29,8 @@ const FormBirthdayGuy: React.FC = () => {
   const [relationships, setRelationships] = useState<string>("");
   const [about, setAbout] = useState<string>("");
   const [wishes, setWishes] = useState<string>("");
+  const [language, setLanguage] = useState<string>("Russian");
+  const [sizeOfGreeting, setSizeOfGreeting] = useState<string>("");
   const [result, setResult] = useState<string>("");
 
 
@@ -39,12 +46,12 @@ const FormBirthdayGuy: React.FC = () => {
   const handleRelationshipsChange = createChangeHandler(setRelationships);
   const handleAboutChange = createChangeHandler(setAbout);
   const handleWishesChange = createChangeHandler(setWishes);
+  const handleLanguageChange = createChangeHandler(setLanguage);
+  const handleSizeOfGreetingChange = createChangeHandler(setSizeOfGreeting);
   
 
   const [requestSent, setRequestSent] = useState<boolean>(false);
   const generate_via_chatCompletions = async (textRequest: string) => {
-    console.log("inside func")
-    console.log(requestSent)
     const openai = new OpenAI({apiKey:apiTokens.openAI_API, dangerouslyAllowBrowser: true});
 
    
@@ -55,7 +62,6 @@ const FormBirthdayGuy: React.FC = () => {
       });
 
     let answer = completion.choices[0].message.content;
-    console.log(answer)
     if (answer !== null) {
       setResult(answer);
     }
@@ -66,11 +72,13 @@ const FormBirthdayGuy: React.FC = () => {
 
   const handleSubmit = () => {
     setRequestSent(true);
-    let textRequest = (`Create a sweet personal congratulations for a birthday text in
-                    for a ${age} years old ${gender} named ${name}
-                    that is my ${relationships}.
-                    Here is an additional info about this person: ${about}
-                    Include in the following wishes, maybe reformulate a bit ${wishes}`);
+    let subrequestAbout = about === "" ? "" : `Here is an additional info about this person: ${about}`;
+    let subrequestWishes = wishes === "" ? "" : `Include in the following wishes, maybe reformulate a bit ${wishes}`;
+    let textRequest = (`Create a ${sizeOfGreeting} sweet personal congratulations 
+                        for a birthday text in ${language} language
+                        for a ${age} years old ${gender} named ${name}
+                        that is my ${relationships}.` + subrequestAbout + subrequestWishes);
+                    
 
     generate_via_chatCompletions(textRequest);
     
@@ -128,6 +136,23 @@ const FormBirthdayGuy: React.FC = () => {
             placeholder='Do you have anything specific you would like to wish? '
             value={wishes}
             onChange={handleWishesChange}
+          />
+        </Form.Group>
+
+        <Form.Group widths='equal'>
+          <Form.Field
+            control={Input}
+            label='Language'
+            placeholder='Age'
+            value={language}
+            onChange={handleLanguageChange}
+          />
+          <Form.Field
+            control={Select}
+            label='Size of greeting'
+            options={sizeOfAnswerOptions}
+            value={sizeOfGreeting}
+            onChange={handleSizeOfGreetingChange}
           />
         </Form.Group>
         
