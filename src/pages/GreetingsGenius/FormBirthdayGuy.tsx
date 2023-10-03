@@ -1,8 +1,11 @@
 
-import { useState } from 'react'
+import apiTokens from 'config';
+import { useState } from 'react';
+import OpenAI from 'openai';
 import {
   Form,
   Input,
+  Loader,
   Segment,
   Select,
   TextArea,
@@ -21,12 +24,11 @@ const FormBirthdayGuy: React.FC = () => {
   const [relationships, setRelationships] = useState<string>("");
   const [about, setAbout] = useState<string>("");
   const [wishes, setWishes] = useState<string>("");
-  const [request, setRequest] = useState<string>("");
+  const [result, setResult] = useState<string>("");
+
 
   const createChangeHandler = (setterFunction:(value: React.SetStateAction<string>) => void) => 
                                             (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("Handler name: " + name);
-    console.log("Handler target: " + e.target.value);
     setterFunction(e.target.value);
     
   };
@@ -38,16 +40,40 @@ const FormBirthdayGuy: React.FC = () => {
   const handleAboutChange = createChangeHandler(setAbout);
   const handleWishesChange = createChangeHandler(setWishes);
   
-  
+
+  const [requestSent, setRequestSent] = useState<boolean>(false);
+  const generate_via_chatCompletions = async (textRequest: string) => {
+    console.log("inside func")
+    console.log(requestSent)
+    const openai = new OpenAI({apiKey:apiTokens.openAI_API, dangerouslyAllowBrowser: true});
+
+   
+      let completion = await openai.chat.completions.create({
+        messages: [
+        {"role": "user", "content": textRequest}],
+        model: "gpt-3.5-turbo",
+      });
+
+    let answer = completion.choices[0].message.content;
+    console.log(answer)
+    if (answer !== null) {
+      setResult(answer);
+    }
+    setRequestSent(false);
+  }
+
+
 
   const handleSubmit = () => {
-    setRequest(`Create a sweet personal congratulations for a birthday text in
+    setRequestSent(true);
+    let textRequest = (`Create a sweet personal congratulations for a birthday text in
                     for a ${age} years old ${gender} named ${name}
                     that is my ${relationships}.
                     Here is an additional info about this person: ${about}
                     Include in the following wishes, maybe reformulate a bit ${wishes}`);
 
-    console.log("request: " + request);
+    generate_via_chatCompletions(textRequest);
+    
   }
 
     return (
@@ -107,12 +133,17 @@ const FormBirthdayGuy: React.FC = () => {
         
         <Form.Button secondary content='Submit' />
       </Form>
-
       <div style={{marginTop: "20px"}}>
-        <Segment size="large">
-          {request}
-        </Segment>
-      </div>
+      {
+        requestSent ? (
+          <Loader active inline='centered' size="large"/>
+        ) :
+          <Segment size="large">
+            {result}
+          </Segment>
+       
+      }
+       </div>
       </div>
 
 
