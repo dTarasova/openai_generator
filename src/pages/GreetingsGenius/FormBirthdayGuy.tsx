@@ -163,7 +163,7 @@ const FormBirthdayGuy: React.FC = () => {
         requestSent ? (
           <Loader active inline='centered' size="large"/>
         ) :
-          <Segment size="large">
+          <Segment size="large" textAlign='left'>
             {result}
           </Segment>
        
