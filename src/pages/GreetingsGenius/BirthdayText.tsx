@@ -52,7 +52,9 @@ const BirthdayText: React.FC = () => {
 
   const [requestSent, setRequestSent] = useState<boolean>(false);
   const generate_via_chatCompletions = async (textRequest: string) => {
-    const openai = new OpenAI({apiKey:apiTokens.openAI_API, dangerouslyAllowBrowser: true});
+    const openaiApiKey = process.env.OPENAI_API_KEY;
+    console.log("openaiApiKey " + openaiApiKey);
+    const openai = new OpenAI({apiKey:openaiApiKey, dangerouslyAllowBrowser: true});
 
    
       let completion = await openai.chat.completions.create({

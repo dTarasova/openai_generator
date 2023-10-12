@@ -14,7 +14,8 @@ const generateImage = async () => {
     if(imageDescription === "") return;
     setRequestSent(true);
     const request = "Create a birthday card with " + imageDescription;
-    const openai = new OpenAI({apiKey: apiTokens.openAI_API, dangerouslyAllowBrowser:true});
+    const openaiApiKey = process.env.OPENAI_API_KEY;
+    const openai = new OpenAI({apiKey: openaiApiKey, dangerouslyAllowBrowser:true});
     const data = await openai.images.generate( {
         prompt:request,
         size:"512x512"

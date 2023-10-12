@@ -16,12 +16,13 @@ const ImageGenerator = () => {
     }
     console.log(inputValue);
     setRequestSent(true);
+    const openaiApiKey = process.env.OPENAI_API_KEY;
     const response = await fetch (
       "https://api.openai.com/v1/images/generations", {
         method:"POST",
         headers: {
           "Content-Type":"application/json",
-          Authorization: `Bearer ${apiTokens.openAI_API}`,
+          Authorization: `Bearer ${openaiApiKey}`,
           "User-Agent":"Chrome",
         },
         body:JSON.stringify({
