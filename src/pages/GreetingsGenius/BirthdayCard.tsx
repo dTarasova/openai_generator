@@ -27,10 +27,13 @@ const generateImage = async () => {
 
 
 return (
-    <div>
-        <Header as="h4" textAlign="left">
-            Describe what would you like to see on the card in 1-3 words
+    <div style={{alignContent:"center"}}>
+        <Header as="h3" textAlign="center">
+                Generate a perfect card
         </Header>
+        <p>
+        Describe what would you like to see on the card in 1-3 words
+        </p>
         <Form onSubmit={generateImage} >
         
             <Form.Field 
@@ -43,12 +46,12 @@ return (
             <Form.Button secondary content="Submit"/>
         
         </Form>
-        <div style={{marginTop: "20px"}}>
+        <div style={{marginTop: "1em"}}>
         {
             requestSent? (
                 <Loader active inline size="large" />
             ) :
-            <Image src={imageUrl==="" ? defaultBirthdayImage : imageUrl}  size="large"/>
+            <Image src={imageUrl==="" ? defaultBirthdayImage : imageUrl}  size="large" centered/>
         }
         </div>
         

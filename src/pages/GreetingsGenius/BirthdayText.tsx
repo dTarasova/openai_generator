@@ -2,6 +2,7 @@ import { useState } from 'react';
 import OpenAI from 'openai';
 import {
   Form,
+  Header,
   Input,
   Loader,
   Segment,
@@ -30,7 +31,7 @@ const BirthdayText: React.FC = () => {
   const [wishes, setWishes] = useState<string>("");
   const [language, setLanguage] = useState<string>("Russian");
   const [sizeOfGreeting, setSizeOfGreeting] = useState<string>("");
-  const [result, setResult] = useState<string>("");
+  const [result, setResult] = useState<string>("Result");
 
 
   const createChangeHandler = (setterFunction:(value: React.SetStateAction<string>) => void) => 
@@ -86,7 +87,12 @@ const BirthdayText: React.FC = () => {
 
     return (
       <div>
-
+      <Header as="h3" textAlign="center">
+              Generate a perfect text
+      </Header>
+      <p>
+        Enter information about a person you want to greet.
+      </p>
       <Form onSubmit={handleSubmit}>
         <Form.Group widths='equal'>
           <Form.Field
