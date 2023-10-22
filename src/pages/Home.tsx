@@ -1,4 +1,4 @@
-import { Header, List, Image } from 'semantic-ui-react'
+import { Header, Image } from 'semantic-ui-react'
 import welcomeImage from 'assets/korgi.png'
 
 const Home = () => {
