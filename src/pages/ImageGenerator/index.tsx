@@ -1,5 +1,4 @@
 import InputForm from "components/navbar/inputForm";
-import apiTokens from "config";
 import defaultImage from "assets/logo.svg";
 import {useState } from "react";
 import {Header, Image, Container, Segment, Loader } from "semantic-ui-react";
@@ -16,7 +15,7 @@ const ImageGenerator = () => {
     }
     console.log(inputValue);
     setRequestSent(true);
-    const openaiApiKey = process.env.OPENAI_API_KEY;
+    const openaiApiKey = process.env.REACT_APP_OPENAI_API;
     const response = await fetch (
       "https://api.openai.com/v1/images/generations", {
         method:"POST",

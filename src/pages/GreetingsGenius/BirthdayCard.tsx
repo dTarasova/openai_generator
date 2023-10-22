@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Header, Form, Image, Input, Loader } from "semantic-ui-react";
 import defaultBirthdayImage from "assets/birthdayCard.png";
 import OpenAI from 'openai';
-import apiTokens from "config";
 
 const BirthdayCard = () => {
 
@@ -14,7 +13,7 @@ const generateImage = async () => {
     if(imageDescription === "") return;
     setRequestSent(true);
     const request = "Create a birthday card with " + imageDescription;
-    const openaiApiKey = process.env.OPENAI_API_KEY;
+    const openaiApiKey = process.env.REACT_APP_OPENAI_API;
     const openai = new OpenAI({apiKey: openaiApiKey, dangerouslyAllowBrowser:true});
     const data = await openai.images.generate( {
         prompt:request,

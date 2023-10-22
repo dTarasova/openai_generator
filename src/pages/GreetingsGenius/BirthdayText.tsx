@@ -1,4 +1,3 @@
-import apiTokens from 'config';
 import { useState } from 'react';
 import OpenAI from 'openai';
 import {
@@ -52,8 +51,7 @@ const BirthdayText: React.FC = () => {
 
   const [requestSent, setRequestSent] = useState<boolean>(false);
   const generate_via_chatCompletions = async (textRequest: string) => {
-    const openaiApiKey = process.env.OPENAI_API_KEY;
-    console.log("openaiApiKey " + openaiApiKey);
+    const openaiApiKey = process.env.REACT_APP_OPENAI_API;
     const openai = new OpenAI({apiKey:openaiApiKey, dangerouslyAllowBrowser: true});
 
    
