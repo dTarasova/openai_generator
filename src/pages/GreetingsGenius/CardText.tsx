@@ -63,6 +63,11 @@ const CardText: React.FC = () => {
 
   const handleSubmit = () => {
     setRequestSent(true);
+    let holidayLowerCase = holiday.toLowerCase();
+    let holidayIsBirthday =
+      holidayLowerCase.includes("birthday") ||
+      holidayLowerCase.includes("рождени");
+    let subrequestAge = holidayIsBirthday ? ` ${age} years old` : "";
     let subrequestAbout =
       about === ""
         ? ""
@@ -74,7 +79,7 @@ const CardText: React.FC = () => {
     let textRequest =
       `Create a sweet personal congratulations 
                         with a ${holiday} in ${language} language
-                        for a ${age} years old ${gender} named ${name}
+                        for a ${subrequestAge} ${gender} named ${name}
                         that is my ${relationships}.` +
       subrequestAbout +
       subrequestWishes;
