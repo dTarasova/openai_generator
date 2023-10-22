@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Header, Form, Image, Input, Loader } from "semantic-ui-react";
 import defaultCardImage from "assets/birthdayCard.png";
 import OpenAI from "openai";
-import { equal } from "assert";
 
 const CardImage = () => {
   const [imageDescription, setImageDescription] = useState<string>("");
@@ -69,7 +68,7 @@ const CardImage = () => {
               style={{ flex: 1 }}
             />
           </Form.Field>
-          <Form.Button secondary content="Submit" width={4}/>
+          <Form.Button secondary content="Submit" width={4} />
         </Form.Group>
       </Form>
       <div style={{ marginTop: "1em" }}>
